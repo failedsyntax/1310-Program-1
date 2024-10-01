@@ -27,6 +27,10 @@ class MusicStorage{
 
         void removePlaylist(int index);
 
+        Playlist* getPlaylist(int index);
+
+        void displayPlaylists();
+
         void printPlaylists() const;
 
         void printSpecificPlaylist(int playlistNum);

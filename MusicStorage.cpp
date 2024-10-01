@@ -34,6 +34,21 @@ void MusicStorage::removePlaylist(int index){
     --currentPlaylists;
 }
 
+Playlist* MusicStorage::getPlaylist(int index) {
+    if (index <= maxPlaylists) {
+        return playlists[index];
+    } else {
+        cout << "Playlist selection is out of bounds!" << endl;
+        return nullptr;
+    }
+}
+
+void MusicStorage::displayPlaylists() {
+    for (int i = 0; i < currentPlaylists; ++i) {
+        cout << setw(15) << "Playlist " << (i + 1) << endl;
+    };
+}
+
 void MusicStorage::printPlaylists() const{
     for (int i = 0; i < currentPlaylists; ++i){
         cout << "Playlist " << (i + 1) << ": " << endl;

@@ -10,3 +10,28 @@ void displayWelcomeMenu() {
     cout << setw(22) << "5. Delete Playlist" << endl;
     cout << setw(22) << "6. Export Playlist" << endl;
 }
+
+void getNewSongInfo(Playlist* Playlist) {
+    string Title, Artist, Duration;
+    int Year, Rating;
+
+    cin.ignore(); 
+
+    cout << "Song Title: ";
+    getline(cin, Title);
+
+    cout << "Song Artist: ";
+    getline(cin, Artist);
+
+    cout << "Song Duration (x:xx): ";
+    getline(cin, Duration);
+
+    cout << "Song Release Year: ";
+    cin >> Year;
+
+    cout << "Song Rating: ";
+    cin >> Rating;
+
+    Song newSong = Song(Title.c_str(), Artist.c_str(), Duration.c_str(), Year, Rating);
+    Playlist->addSong(newSong);
+}

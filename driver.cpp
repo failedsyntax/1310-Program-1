@@ -46,8 +46,38 @@ int main() {
             };
 
             case 3: {
-                // Modify Playlist (Add / Remove songs)
-                break;
+                int playlistToModifySelection;
+                int modifyChoice;
+
+                Playlist* PlaylistToModify;
+
+                cout << "Please select a playlist to modify" << endl;
+                MainStorage.displayPlaylists();
+
+                cout << "Selection: ";
+                cin >> playlistToModifySelection;
+                PlaylistToModify = MainStorage.getPlaylist(playlistToModifySelection);
+
+                cout << "\nWhat do you want to do?" << endl;
+                cout << setw(10) << "1. Add song(s)" << endl;
+                cout << setw(10) << "2. Remove song(s)" << endl;
+
+                cout << "Selection: ";
+                cin >> modifyChoice;
+
+                // Add Song
+                if (modifyChoice == 1) {
+                    getNewSongInfo(PlaylistToModify);
+                    break;
+                // Remove Song
+                } else if(modifyChoice == 2) {
+
+                    break;
+                // Not a selection
+                } else {
+                    cout << "You didn't select a valid option!" << endl;
+                    break;
+                }
             };
 
             case 4: {
@@ -57,9 +87,8 @@ int main() {
                 int playlistChoice;
 
                 cout << "Please select a playlist to display" << endl;
-                for (int i = 0; i < MAX_PLAYLISTS_IN_STORAGE; i++) {
-                    cout << setw(15) << "Playlist " << i + 1 << endl;
-                };
+                MainStorage.displayPlaylists();
+
                 cout << "Selection: ";
                 cin >> playlistChoice;
 
