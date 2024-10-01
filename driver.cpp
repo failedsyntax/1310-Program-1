@@ -1,42 +1,77 @@
 #include "Playlist.h"
 #include "song.h"
 #include "MusicStorage.h"
+#include "functions.h"
+
+const int MAX_PLAYLISTS_IN_STORAGE = 5;
 
 int main() {
-    int numberSongs = 0;
+    // Menu
+    char exitChar = 'n';
+    char userExitChar;
 
-    int songReadYear, songReadRating;
-    string songReadTitle, songReadArtist, songReadDuration, ReadTmp;
+    int userMenu;
 
-    string fileName = "Songs.txt";
-    Playlist TestPlaylist = Playlist(100);
-    
-    // Open songs file
-    ifstream readFile;
-    readFile.open(fileName);
+    string importFileName;
+    ifstream importFile;
 
-    // Can't open?
-    if (!readFile) {
-        cout << "Unable to open " << fileName << "!" << endl;
-        exit(1);
-    }
+    // Library
+    MusicStorage MainStorage = MusicStorage(MAX_PLAYLISTS_IN_STORAGE);
 
-    // Read file if opened
-    while (getline(readFile, songReadTitle, '#')) {
-        getline(readFile, songReadArtist, '#');
-        getline(readFile, songReadDuration, '#');
-        getline(readFile, ReadTmp, '#');
-        songReadYear = stoi(ReadTmp);
-        getline(readFile, ReadTmp);
-        songReadRating = stoi(ReadTmp);
+    do {
+        // Welcome Menu
+        displayWelcomeMenu();
+        cin >> userMenu;
 
-        Song NewSong = Song(songReadTitle.c_str(), songReadArtist.c_str(), songReadDuration.c_str(), songReadYear, songReadRating);
-        TestPlaylist.addSong(NewSong);
+        switch(userMenu) {
+            case 1: {
+                // Display all Playlists and their songs
+                break;
+            };
 
-        cout << songReadTitle << endl << songReadArtist << endl << songReadDuration << endl << songReadYear << endl << songReadRating << endl << endl;
-        //break;
-    }
+            case 2: {
+                cout << "Please input a file of songs to import:" << endl;
+                cin.ignore();
+                getline(cin, importFileName);
 
+                cout << "Importing songs from " << importFileName << " now.." << endl;
+                bool LoadedFile = MainStorage.loadFromFile(importFileName.c_str());
+
+                if (LoadedFile != true) {
+                    cout << "Something happened when importing " << importFileName << "!" << endl;
+                    break;
+                }
+                cout << "Successfully imported songs from " << importFileName << "!" << endl;
+                break;
+            };
+
+            case 3: {
+                // Modify Playlist (Add / Remove songs)
+                break;
+            };
+
+            case 4: {
+                cout << endl << endl;
+
+                // Display Playlist
+                int playlistChoice;
+
+                cout << "Please select a playlist to display" << endl;
+                for (int i = 0; i < MAX_PLAYLISTS_IN_STORAGE; i++) {
+                    cout << setw(15) << "Playlist " << i + 1 << endl;
+                };
+                cout << "Selection: ";
+                cin >> playlistChoice;
+
+                // Down 1 to match array index's
+                playlistChoice -= 1;
+                MainStorage.printSpecificPlaylist(playlistChoice);
+
+                break;
+            }
+        }
+
+    } while(userExitChar != exitChar);
 
     return 0;
 }

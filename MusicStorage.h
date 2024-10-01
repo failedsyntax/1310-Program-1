@@ -27,9 +27,11 @@ class MusicStorage{
 
         void removePlaylist(int index);
 
-        void printPlaylist() const;
+        void printPlaylists() const;
 
-        bool loadFromFile(const char* filename);
+        void printSpecificPlaylist(int playlistNum);
+
+        bool loadFromFile(const char* fileName);
 
 };
 

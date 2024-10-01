@@ -1,6 +1,6 @@
 #include "MusicStorage.h"
 
-MusicStorage::MusicStorage(int size) : maxPlaylists(size), currentPlaylists(0){
+MusicStorage::MusicStorage(int size) : maxPlaylists(size), currentPlaylists(0) {
     playlists = new Playlist*[maxPlaylists];
 }
 
@@ -34,11 +34,16 @@ void MusicStorage::removePlaylist(int index){
     --currentPlaylists;
 }
 
-void MusicStorage::printPlaylist() const{
+void MusicStorage::printPlaylists() const{
     for (int i = 0; i < currentPlaylists; ++i){
         cout << "Playlist " << (i + 1) << ": " << endl;
         playlists[i]->printSong();
     }
+}
+
+void MusicStorage::printSpecificPlaylist(int playlistNum) {
+    cout << "Printing playlist " << playlistNum + 1 << ":" << endl;
+    playlists[playlistNum]->printSong();
 }
 
 bool MusicStorage::loadFromFile(const char* filename){
