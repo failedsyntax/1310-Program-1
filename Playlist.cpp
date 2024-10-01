@@ -9,11 +9,12 @@ Playlist::~Playlist(){
 }
 
 void Playlist::addSong(const Song& song){
+    cout << currentSize << " " << maxSize << endl;
     if (currentSize >= maxSize){
         cout << "Cannot add more songs." << endl;
         return;
     }
-    else{
+    else {
         songs[currentSize++] = song;
     }
 }

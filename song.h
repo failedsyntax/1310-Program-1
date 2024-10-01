@@ -1,5 +1,5 @@
-#ifndef SONG.H
-#define SONG.H
+#ifndef SONG_H
+#define SONG_H
 
 #include <iostream>
 #include <cstring>
@@ -12,9 +12,10 @@ class Song{
     private:
         char* title;
         char* artist;
-        char* album;
+        char* duration;
         int year;
         int rating;
+
     public:
         //constructor
         Song();
@@ -26,13 +27,13 @@ class Song{
         //accessor
         const char* getTitle() const;
         const char* getArtist() const;
-        const char* getAlbum() const;
+        const char* getDuration() const;
         int getYear() const;
         int getRating() const;
         //mutators
         void setTitle(const char*);
         void setArtist(const char*);
-        void setAlbum(const char*);
+        void setDuration(const char*);
         void setYear(int);
         void setRating(int);
 };

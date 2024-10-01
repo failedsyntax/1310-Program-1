@@ -17,7 +17,7 @@ void MusicStorage::addPlaylist(const Playlist& playlist){
         playlists[currentPlaylists++] = new Playlist(playlist);
     }
     else {
-        cout << "NO more Playlists can be added." << endl;
+        cout << "No more Playlists can be added." << endl;
     }
 }
 
@@ -79,13 +79,13 @@ bool MusicStorage::loadFromFile(const char* filename){
         i++;
 
         while (i < line.size() && line[i]!= ','){
-            year = year * 10 + (line[i] - 'null');
+            year = year * 10 + (line[i] - '\0');
             i++;
         }
         i++;
 
         while (i < line.size()){
-            rating = rating * 10 + (line [i] - 'null');
+            rating = rating * 10 + (line [i] - '\0');
             i++;
         }
 

@@ -1,5 +1,5 @@
-#ifndef storage.h
-#define storage.h
+#ifndef storage_h
+#define storage_h
 
 /*
 Pointer to an array of pointers to the data.
