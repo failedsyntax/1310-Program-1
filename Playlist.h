@@ -1,5 +1,5 @@
-#ifndef PLAYLIST.H
-#define PLAYLIST.H
+#ifndef PLAYLIST_H
+#define PLAYLIST_H
 #include "song.h"
 
 class Playlist{

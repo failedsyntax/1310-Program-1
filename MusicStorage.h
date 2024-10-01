@@ -1,5 +1,5 @@
-#ifndef storage.h
-#define storage.h
+#ifndef MUSICSTORAGE_H
+#define MUSICSTORAGE_H
 
 /*
 Pointer to an array of pointers to the data.

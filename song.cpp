@@ -3,11 +3,11 @@
 //constructor
 Song::Song(){
     title = new char[1];
-    title[0] = 'null';
+    title[0] = '0';
     artist = new char[1];
-    artist[0] = 'null';
+    artist[0] = '0';
     album = new char [1];
-    album[0] = 'null';
+    album[0] = '0';
     year = 0;
     rating = 0;
 }
