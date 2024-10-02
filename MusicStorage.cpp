@@ -12,30 +12,60 @@ MusicStorage::~MusicStorage(){
     cout << "Released Memory for the Array of pointers" << endl;
 }
 
+int MusicStorage::getPlaylistCount() {
+    return currentPlaylists;
+}
+
+// re-wrote by jack
 void MusicStorage::addPlaylist(const Playlist& playlist){
-    if (currentPlaylists < maxPlaylists){
-        playlists[currentPlaylists++] = new Playlist(playlist);
-    }
-    else {
-        cout << "No more Playlists can be added." << endl;
-    }
+    if (currentPlaylists == maxPlaylists) {
+        cout << "Max playlist count reached! Increasing.." << endl;
+
+        // Automatically increase array size & move over playlists
+        maxPlaylists++;
+        Playlist** updatedPlaylists = new Playlist* [maxPlaylists];
+
+        for (int i = 0; i < currentPlaylists; i++) { // Transfer existing playlists
+            updatedPlaylists[i] = playlists[i];
+        };
+
+        // Release old playlist and update
+        delete [] playlists;
+        playlists = updatedPlaylists;
+    };
+
+    playlists[currentPlaylists++] = new Playlist(playlist);
 }
 
 void MusicStorage::removePlaylist(int index){
     if (index < 0 || index >= currentPlaylists){
-        cout << "Please enter the correct index" << endl;
+        cout << "Please enter a valid playlist (index)" << endl;
         return;
     }
-    delete playlists[index];
+
     for (int i = index; i < currentPlaylists - 1; ++i){
         playlists[i] = playlists[i + 1];
+    };
+    --currentPlaylists;
+
+    if (currentPlaylists < maxPlaylists) {
+        maxPlaylists--;
+        Playlist** updatedPlaylist = new Playlist* [maxPlaylists];
+
+        // copy data over
+        for (int i = 0; i < currentPlaylists; ++i) {
+            updatedPlaylist[i] = playlists[i];
+        };
+
+        // Release old playlist and update
+        delete [] playlists;
+        playlists = updatedPlaylist;
     }
 
-    --currentPlaylists;
 }
 
 Playlist* MusicStorage::getPlaylist(int index) {
-    if (index <= maxPlaylists) {
+    if (index <= currentPlaylists) {
         return playlists[index];
     } else {
         cout << "Playlist selection is out of bounds!" << endl;
@@ -59,6 +89,20 @@ void MusicStorage::printPlaylists() const{
 void MusicStorage::printSpecificPlaylist(int playlistNum) {
     cout << "Printing playlist " << playlistNum + 1 << ":" << endl;
     playlists[playlistNum]->printSong();
+}
+
+bool MusicStorage::saveToFile(int index, string fileName) {
+    if (index <= currentPlaylists) {
+        ofstream saveFile;
+
+        Playlist* SelectedPlaylist = playlists[index];
+        cout << "Count: " << SelectedPlaylist->getSongCount();
+        for (int i = 0; i < SelectedPlaylist-> getSongCount(); i++) {
+            cout << i << " | "; SelectedPlaylist[i].printSong(); 
+        }
+    };
+
+    return true;
 }
 
 bool MusicStorage::loadFromFile(const char* filename){

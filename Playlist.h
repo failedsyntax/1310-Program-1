@@ -23,6 +23,8 @@ class Playlist{
     void removeSong(int index);
 
     void printSong() const;
+
+    int getSongCount();
 };
 
 #endif

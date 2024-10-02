@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void displayWelcomeMenu() {
-    cout << "Welcome to the Spotify Library Backend Manager!" << endl << endl;
+    cout << endl << endl << "Welcome to the Spotify Library Backend Manager!" << endl << endl;
     cout << "Please make a selection:" << endl;
     cout << setw(22) << "1. Display Library" << endl;
     cout << setw(22) << "2. Import Playlist" << endl;

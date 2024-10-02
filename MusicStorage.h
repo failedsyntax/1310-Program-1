@@ -36,6 +36,10 @@ class MusicStorage{
         void printSpecificPlaylist(int playlistNum);
 
         bool loadFromFile(const char* fileName);
+        
+        bool saveToFile(int index, string FileName);
+
+        int getPlaylistCount();
 
 };
 

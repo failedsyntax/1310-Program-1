@@ -37,3 +37,7 @@ void Playlist::printSong() const{
         return;
     }
 }
+
+int Playlist::getSongCount() {
+    return currentSize;
+}
