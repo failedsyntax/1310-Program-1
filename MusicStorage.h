@@ -1,5 +1,5 @@
-#ifndef storage.h
-#define storage.h
+#ifndef storage_h
+#define storage_h
 
 /*
 Pointer to an array of pointers to the data.
@@ -23,13 +23,18 @@ class MusicStorage{
         MusicStorage(int size);
         ~MusicStorage();
 
-        void addPlaylist(const Playlist& playlist);
+        Playlist* getPlaylist(int index);
 
+        void addPlaylist(Playlist* newPlaylist);
         void removePlaylist(int index);
+        void displayPlaylists();
+        void printPlaylists() const;
+        void printSpecificPlaylist(int playlistNum);
 
-        void printPlaylist() const;
+        bool loadFromFile(const char* fileName);
+        bool saveToFile(int index, string FileName);
 
-        bool loadFromFile(const char* filename);
+        int getPlaylistCount();
 
 };
 

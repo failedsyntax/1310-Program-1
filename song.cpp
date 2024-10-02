@@ -3,11 +3,11 @@
 //constructor
 Song::Song(){
     title = new char[1];
-    title[0] = 'null';
+    title[0] = '\0';
     artist = new char[1];
-    artist[0] = 'null';
-    album = new char [1];
-    album[0] = 'null';
+    artist[0] = '\0';
+    duration = new char [1];
+    duration[0] = '\0';
     year = 0;
     rating = 0;
 }
@@ -20,22 +20,22 @@ Song::Song(const char* t, const char* a, const char* ab, int y, int r){
     artist = new char[strlen(a) + 1];
     strcpy(artist, a);
 
-    album = new char[strlen(ab) + 1];
-    strcpy(album, ab);
+    duration = new char[strlen(ab) + 1];
+    strcpy(duration, ab);
 
     year = y;
     rating = r;
 }
 
-//Destructor
-
-Song::~Song(){
+// Song destructor
+Song::~Song() {
+    cout << "Destroying Song: " << title << endl;
     delete[] title;
     delete[] artist;
-    delete[] album;
-
-    cout << "Released title, artist, and album." << endl;
+    delete[] duration;
+    cout << "Song destroyed" << endl;
 }
+
 
 
 //Accessors
@@ -48,8 +48,8 @@ const char* Song::getArtist() const{
     return artist;
 }
 
-const char* Song::getAlbum() const{
-    return album;
+const char* Song::getDuration() const{
+    return duration;
 }
 
 int Song::getYear() const{
@@ -74,10 +74,10 @@ void Song::setArtist(const char* a){
     strcpy(artist, a);
 }
 
-void Song::setAlbum(const char* ab){
-    delete [] album;
-    album = new char [strlen(ab) + 1];
-    strcpy(album, ab);
+void Song::setDuration(const char* ab){
+    delete [] duration;
+    duration = new char [strlen(ab) + 1];
+    strcpy(duration, ab);
 }
 
 void Song::setYear(int y){
@@ -85,7 +85,7 @@ void Song::setYear(int y){
 }
 
 void Song::setRating(int r){
-    if (r <=4 && r>=0){
+    if (r <= 4 && r >= 0){
         rating = r;
     }
     else{
