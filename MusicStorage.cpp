@@ -4,12 +4,11 @@ MusicStorage::MusicStorage(int size) : maxPlaylists(size), currentPlaylists(0) {
     playlists = new Playlist*[maxPlaylists];
 }
 
-MusicStorage::~MusicStorage(){
-    for (int i = 0; i < currentPlaylists; ++i){
+MusicStorage::~MusicStorage() {
+    for (int i = 0; i < currentPlaylists; ++i) {
         delete playlists[i];
     }
     delete[] playlists;
-    cout << "Released Memory for the Array of pointers" << endl;
 }
 
 int MusicStorage::getPlaylistCount() {
@@ -17,7 +16,7 @@ int MusicStorage::getPlaylistCount() {
 }
 
 // re-wrote by jack
-void MusicStorage::addPlaylist(const Playlist& playlist){
+void MusicStorage::addPlaylist(Playlist* newPlaylist){
     if (currentPlaylists == maxPlaylists) {
         cout << "Max playlist count reached! Increasing.." << endl;
 
@@ -34,7 +33,8 @@ void MusicStorage::addPlaylist(const Playlist& playlist){
         playlists = updatedPlaylists;
     };
 
-    playlists[currentPlaylists++] = new Playlist(playlist);
+    playlists[currentPlaylists++] = newPlaylist;
+    cout << "Updated Playlist" << endl;
 }
 
 void MusicStorage::removePlaylist(int index){
@@ -105,74 +105,59 @@ bool MusicStorage::saveToFile(int index, string fileName) {
     return true;
 }
 
-bool MusicStorage::loadFromFile(const char* filename){
+bool MusicStorage::loadFromFile(const char* filename) {
     string title;
     string artist;
-    string album;
-    string line;
+    string duration;
+    string tmp;
     int year = 0;
     int rating = 0;
 
     ifstream file(filename);
-    if (!file){
+    if (!file) {
         cout << "Unable to open file." << endl;
         return false;
     }
 
-    Playlist* newPlaylist = new Playlist(100);
+    cout << "File opened successfully." << endl;
 
-    while (getline(file, line)){
-        size_t i = 0;
-        char currentChar;
-        while(i < line.size() && line[i] != ','){
-            title += line[i];
-            i++;
-        }
-        i++;
+    Playlist* newPlaylist = new Playlist(0);
 
-        while (i < line.size() && line[i] != ','){
-            artist += line [i];
-            i++;
-        }
-        i++;
+    while (getline(file >> ws, title, '#')) {
+        getline(file, artist, '#');
+        getline(file, duration, '#');
+        getline(file, tmp, '#'); // Year
+        year = stoi(tmp);
+        getline(file, tmp, '#'); // Rating
+        rating = stoi(tmp);
 
-        while (i < line.size() && line [i] != ','){
-            album += line[i];
-            i++;
-        }
-        i++;
+        cout << "Title: " << title << ", Artist: " << artist << ", Duration: " << duration << ", Year: " << year << ", Rating: " << rating << endl;
+        Song newSong = Song(title.c_str(), artist.c_str(), duration.c_str(), year, rating);
+        
+        newPlaylist->addSong(newSong);
 
-        while (i < line.size() && line[i]!= ','){
-            year = year * 10 + (line[i] - '\0');
-            i++;
-        }
-        i++;
-
-        while (i < line.size()){
-            rating = rating * 10 + (line [i] - '\0');
-            i++;
-        }
-
-        if (year < 0 || year > 2023 || rating < 0 || rating > 4){
-            cout << "Cannot enter data: " << line << endl;
-            continue;
-        }
-
-        Song song (title.data(), artist.data(), album.data(), year, rating);
-        newPlaylist->addSong(song);
+        cout << "Song added to playlist." << endl;
 
         title.clear();
         artist.clear();
-        album.clear();
+        duration.clear();
         year = 0;
         rating = 0;
+        tmp.clear();
     }
 
-    addPlaylist(*newPlaylist);
+    cout << "Finished reading file." << endl;
 
-    delete newPlaylist;
+    addPlaylist(newPlaylist); // Pass the pointer to addPlaylist
+
+    cout << "Playlist added." << endl;
+
+    delete newPlaylist; // Use delete instead of delete[]
+
+    cout << "here2" << endl;
 
     file.close();
     return true;
 }
+
 

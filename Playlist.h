@@ -5,14 +5,13 @@
 
 class Playlist{
     private:
-        Song* songs;
+        Song** songs;
         int maxSize;
         int currentSize;
     public:
 
     //Constructor | Updated to construct
-    Playlist() {
-    }; 
+    Playlist() : songs(nullptr), maxSize(0), currentSize(0) {}; 
     Playlist(int size);
 
     //Destructor

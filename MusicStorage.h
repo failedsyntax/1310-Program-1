@@ -23,20 +23,15 @@ class MusicStorage{
         MusicStorage(int size);
         ~MusicStorage();
 
-        void addPlaylist(const Playlist& playlist);
-
-        void removePlaylist(int index);
-
         Playlist* getPlaylist(int index);
 
+        void addPlaylist(Playlist* newPlaylist);
+        void removePlaylist(int index);
         void displayPlaylists();
-
         void printPlaylists() const;
-
         void printSpecificPlaylist(int playlistNum);
 
         bool loadFromFile(const char* fileName);
-        
         bool saveToFile(int index, string FileName);
 
         int getPlaylistCount();

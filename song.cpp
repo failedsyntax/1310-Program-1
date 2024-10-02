@@ -27,15 +27,15 @@ Song::Song(const char* t, const char* a, const char* ab, int y, int r){
     rating = r;
 }
 
-//Destructor
-
-Song::~Song(){
+// Song destructor
+Song::~Song() {
+    cout << "Destroying Song: " << title << endl;
     delete[] title;
     delete[] artist;
     delete[] duration;
-
-    //cout << "Released title, artist, and duration." << endl;
+    cout << "Song destroyed" << endl;
 }
+
 
 
 //Accessors

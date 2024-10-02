@@ -27,26 +27,35 @@ int main() {
         switch(userMenu) {
             case 1: {
                 // Display all Playlists and their songs
+
+                if (MainStorage.getPlaylistCount() > 0) {
+                    MainStorage.displayPlaylists();
+                } else {
+                    cout << "No playlists to display!" << endl;
+                }
+
                 break;
             };
 
             case 2: {
+                // Import Playlist
                 cout << "Please input a file of songs to import:" << endl;
                 cin.ignore();
                 getline(cin, importFileName);
 
                 cout << "Importing songs from " << importFileName << " now.." << endl;
                 bool LoadedFile = MainStorage.loadFromFile(importFileName.c_str());
-
+                cout << "Finished file" << endl;
                 if (LoadedFile != true) {
                     cout << "Something happened when importing " << importFileName << "!" << endl;
-                    break;
+                } else {
+                    cout << "Successfully imported songs from " << importFileName << "!" << endl;
                 }
-                cout << "Successfully imported songs from " << importFileName << "!" << endl;
                 break;
             };
 
             case 3: {
+                // Edit Playlist
                 int playlistToModifySelection;
                 int modifyChoice;
 
@@ -87,6 +96,7 @@ int main() {
             };
 
             case 4: {
+                // Display specific Playlist
                 cout << endl << endl;
 
                 if (MainStorage.getPlaylistCount() > 0) {
@@ -107,6 +117,37 @@ int main() {
             };
 
             case 5: {
+                // Create Playlist
+                cout << endl << endl;
+
+                int newPlaylistSize, SongsToAddNow;
+                int currentPlaylistCount = MainStorage.getPlaylistCount();
+
+                cout << "How many songs can the playlist contain? ";
+                cin >> newPlaylistSize;
+
+                cout << "How many songs would you like to add now? ";
+                cin >> SongsToAddNow;
+
+                // Create new playlist
+                Playlist* newPlaylist = new Playlist(newPlaylistSize);
+
+                // Add songs if any currently
+                if (SongsToAddNow > 0) { // More than one
+                    for (int i = 0; i < SongsToAddNow; i++) {
+                        cout << "Please input info about song " << (i + 1) << endl;
+                        getNewSongInfo(newPlaylist);
+                    };
+
+                    // Add to main library
+                    MainStorage.addPlaylist(newPlaylist);
+                };
+
+                break;
+
+            };
+
+            case 6: {
                 // Delete Playlist
                 cout << endl << endl;
 
@@ -126,7 +167,7 @@ int main() {
                 break;
             };
 
-            case 6: {
+            case 7: {
                 // Export Playlist
                 cout << endl << endl;
 

@@ -7,8 +7,9 @@ void displayWelcomeMenu() {
     cout << setw(22) << "2. Import Playlist" << endl;
     cout << setw(22) << "3. Modify Playlist" << endl;
     cout << setw(23) << "4. Display Playlist" << endl;
-    cout << setw(22) << "5. Delete Playlist" << endl;
-    cout << setw(22) << "6. Export Playlist" << endl;
+    cout << setw(22) << "5. Create Playlist" << endl;
+    cout << setw(22) << "6. Delete Playlist" << endl;
+    cout << setw(22) << "7. Export Playlist" << endl;
 }
 
 void getNewSongInfo(Playlist* Playlist) {
