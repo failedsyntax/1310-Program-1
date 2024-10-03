@@ -10,31 +10,32 @@ using namespace std;
 
 class Song{
     private:
-        char* title;
-        char* artist;
-        char* duration;
+        string title;
+        string artist;
+        string duration;
         int year;
-        int rating;
+        double rating;
 
     public:
         //constructor
         Song();
         //Overloaded constructor
-        Song(const char*, const char*, const char*, int, int);
+        Song(string, string, string, int, double);
         //Destructor
         ~Song();
 
         //accessor
-        const char* getTitle() const;
-        const char* getArtist() const;
-        const char* getDuration() const;
+        string getTitle() const;
+        string getArtist() const;
+        string getDuration() const;
         int getYear() const;
-        int getRating() const;
+        double getRating() const;
+        
         //mutators
-        void setTitle(const char*);
-        void setArtist(const char*);
-        void setDuration(const char*);
+        void setTitle(string);
+        void setArtist(string);
+        void setDuration(string);
         void setYear(int);
-        void setRating(int);
+        void setRating(double);
 };
 #endif

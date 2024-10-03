@@ -19,9 +19,10 @@ int MusicStorage::getPlaylistCount() {
 void MusicStorage::addPlaylist(Playlist* newPlaylist){
     if (currentPlaylists == maxPlaylists) {
         cout << "Max playlist count reached! Increasing.." << endl;
-
+        cout << "Current PL: " << currentPlaylists << " | " << "Max PL: " << maxPlaylists << endl;
         // Automatically increase array size & move over playlists
         maxPlaylists++;
+        cout << "new max: " << maxPlaylists << endl;
         Playlist** updatedPlaylists = new Playlist* [maxPlaylists];
 
         for (int i = 0; i < currentPlaylists; i++) { // Transfer existing playlists
@@ -34,7 +35,7 @@ void MusicStorage::addPlaylist(Playlist* newPlaylist){
     };
 
     playlists[currentPlaylists++] = newPlaylist;
-    cout << "Updated Playlist" << endl;
+    cout << "Updated Current: " << currentPlaylists << ", Max: " << maxPlaylists << endl << endl;
 }
 
 void MusicStorage::removePlaylist(int index){
@@ -111,7 +112,7 @@ bool MusicStorage::loadFromFile(const char* filename) {
     string duration;
     string tmp;
     int year = 0;
-    int rating = 0;
+    double rating = 0;
 
     ifstream file(filename);
     if (!file) {
@@ -121,41 +122,37 @@ bool MusicStorage::loadFromFile(const char* filename) {
 
     cout << "File opened successfully." << endl;
 
-    Playlist* newPlaylist = new Playlist(0);
+    Playlist* newPlaylist = new Playlist(1);
 
-    while (getline(file >> ws, title, '#')) {
+    //cin.ignore();
+
+    while (getline(file, title, '#')) {
         getline(file, artist, '#');
         getline(file, duration, '#');
         getline(file, tmp, '#'); // Year
         year = stoi(tmp);
         getline(file, tmp, '#'); // Rating
-        rating = stoi(tmp);
+        rating = stod(tmp);
 
         cout << "Title: " << title << ", Artist: " << artist << ", Duration: " << duration << ", Year: " << year << ", Rating: " << rating << endl;
-        Song newSong = Song(title.c_str(), artist.c_str(), duration.c_str(), year, rating);
+        Song* newSong = new Song(title, artist, duration, year, rating);
         
         newPlaylist->addSong(newSong);
-
-        cout << "Song added to playlist." << endl;
 
         title.clear();
         artist.clear();
         duration.clear();
-        year = 0;
-        rating = 0;
         tmp.clear();
+        
+        year = 0;
+        rating = 0.0;
+
     }
 
-    cout << "Finished reading file." << endl;
+    cout << "Finished reading file." << endl << endl;
 
-    addPlaylist(newPlaylist); // Pass the pointer to addPlaylist
-
-    cout << "Playlist added." << endl;
-
-    delete newPlaylist; // Use delete instead of delete[]
-
-    cout << "here2" << endl;
-
+    addPlaylist(newPlaylist);
+    delete newPlaylist;
     file.close();
     return true;
 }
