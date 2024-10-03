@@ -14,7 +14,8 @@ void displayWelcomeMenu() {
 
 void getNewSongInfo(Playlist* Playlist) {
     string Title, Artist, Duration;
-    int Year, Rating;
+    int Year;
+    double Rating;
 
     cin.ignore(); 
 
@@ -33,6 +34,6 @@ void getNewSongInfo(Playlist* Playlist) {
     cout << "Song Rating: ";
     cin >> Rating;
 
-    Song newSong = Song(Title.c_str(), Artist.c_str(), Duration.c_str(), Year, Rating);
+    Song* newSong = new Song(Title, Artist, Duration, Year, Rating);
     Playlist->addSong(newSong);
 }

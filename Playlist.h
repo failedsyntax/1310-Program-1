@@ -17,7 +17,7 @@ class Playlist{
     //Destructor
     ~Playlist();
 
-    void addSong(const Song& song);
+    void addSong(Song* song);
 
     void removeSong(int index);
 
