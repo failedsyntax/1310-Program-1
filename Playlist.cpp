@@ -1,7 +1,11 @@
 #include "Playlist.h"
 #include <iomanip>
 
-Playlist::Playlist(int size) : maxSize(size), currentSize(0) {
+Playlist::Playlist(int size){
+    maxSize = size;
+    currentSize = 0;
+
+    
     songs = new Song* [maxSize];
 }
 
@@ -9,7 +13,6 @@ Playlist::Playlist(int size) : maxSize(size), currentSize(0) {
 Playlist::~Playlist() {
     cout << "\nDestroying Playlist" << endl;
     for (int i = 0; i < currentSize; ++i) {
-        //cout << "Deleting song " << i << ": " << songs[i]->getTitle() << endl;
         delete songs[i];
     }
     delete[] songs;
@@ -19,16 +22,12 @@ Playlist::~Playlist() {
 
 
 void Playlist::addSong(Song* song) {
-    cout << "Current Size: " << currentSize << ", Max Size: " << maxSize << endl;
-
     if (currentSize >= maxSize) {
 
         // Song limit reached, expand playlist size
         int updatedMax = maxSize * 2;
-        cout << "updated maximum: " << updatedMax << endl;
         Song** newSongList = new Song*[updatedMax];
 
-        cout << "copying" << endl;
         // Copy existing songs to the new array
         for (int i = 0; i < currentSize; ++i) {
             newSongList[i] = songs[i];
@@ -38,9 +37,6 @@ void Playlist::addSong(Song* song) {
         delete[] songs;
         songs = newSongList;
         maxSize = updatedMax;
-
-        cout << "Resized successfully. New Max Size: " << maxSize;
-        cout << " | New Current Size: " << currentSize << endl << endl;
     }
     songs[currentSize++] = song; // Allocate new Song object
     cout << "Added song: " << songs[currentSize - 1]->getTitle() << endl << endl;

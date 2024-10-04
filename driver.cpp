@@ -3,8 +3,6 @@
 #include "MusicStorage.h"
 #include "functions.h"
 
-const int MAX_PLAYLISTS_IN_STORAGE = 5;
-
 int main() {
     // Menu
     char exitChar = 'n';
@@ -17,7 +15,7 @@ int main() {
     ifstream importFile;
 
     // Library
-    MusicStorage MainStorage = MusicStorage(0);
+    MusicStorage MainStorage = MusicStorage(1);
 
     do {
         // Welcome Menu
@@ -45,6 +43,7 @@ int main() {
 
                 cout << "Importing songs from " << importFileName << " now.." << endl;
                 bool LoadedFile = MainStorage.loadFromFile(importFileName.c_str());
+                
                 cout << "Finished file" << endl;
                 if (LoadedFile != true) {
                     cout << "Something happened when importing " << importFileName << "!" << endl;
