@@ -25,11 +25,12 @@ int main() {
         switch(userMenu) {
             case 1: {
                 // Display all Playlists and their songs
-
+                cout << endl << endl;
                 if (MainStorage.getPlaylistCount() > 0) {
+                    cout << "Entire Library Storage:" << endl;
                     MainStorage.displayPlaylists();
                 } else {
-                    cout << "No playlists to display!" << endl;
+                    cout << "There are no playlists to display!" << endl;
                 }
 
                 break;
@@ -37,14 +38,13 @@ int main() {
 
             case 2: {
                 // Import Playlist
-                cout << "Please input a file of songs to import:" << endl;
+                cout << endl << "Please input a file of songs to import: ";
                 cin.ignore();
                 getline(cin, importFileName);
 
-                cout << "Importing songs from " << importFileName << " now.." << endl;
+                cout << "Importing songs from " << importFileName << " now.." << endl << endl;
                 bool LoadedFile = MainStorage.loadFromFile(importFileName.c_str());
                 
-                cout << "Finished file" << endl;
                 if (LoadedFile != true) {
                     cout << "Something happened when importing " << importFileName << "!" << endl;
                 } else {
@@ -57,20 +57,21 @@ int main() {
                 // Edit Playlist
                 int playlistToModifySelection;
                 int modifyChoice;
+                int removeSelection;
 
                 Playlist* PlaylistToModify;
 
                 if (MainStorage.getPlaylistCount() > 0) {
                     cout << "Please select a playlist to modify" << endl;
-                    MainStorage.displayPlaylists();
+                    MainStorage.printPlaylists();
 
-                    cout << "Selection: ";
+                    cout << endl << "Selection: ";
                     cin >> playlistToModifySelection;
                     PlaylistToModify = MainStorage.getPlaylist(playlistToModifySelection);
 
-                    cout << "\nWhat do you want to do?" << endl;
+                    cout << endl << "\nWhat do you want to do?" << endl;
                     cout << setw(10) << "1. Add song(s)" << endl;
-                    cout << setw(10) << "2. Remove song(s)" << endl;
+                    cout << setw(10) << "2. Remove song(s)" << endl << endl;
 
                     cout << "Selection: ";
                     cin >> modifyChoice;
@@ -81,7 +82,11 @@ int main() {
                         break;
                     // Remove Song
                     } else if(modifyChoice == 2) {
+                        PlaylistToModify->printSong();
+                        cout << "Please select a song to remove: ";
+                        cin >> removeSelection;
 
+                        PlaylistToModify->removeSong(removeSelection - 1);
                         break;
                     // Not a selection
                     } else {
@@ -100,7 +105,7 @@ int main() {
 
                 if (MainStorage.getPlaylistCount() > 0) {
                     cout << "Please select a playlist to display" << endl;
-                    MainStorage.displayPlaylists();
+                    MainStorage.printPlaylists();
 
                     cout << "Selection: ";
                     cin >> playlistChoice;
@@ -120,7 +125,6 @@ int main() {
                 cout << endl << endl;
 
                 int newPlaylistSize, SongsToAddNow;
-                int currentPlaylistCount = MainStorage.getPlaylistCount();
 
                 cout << "How many songs can the playlist contain? ";
                 cin >> newPlaylistSize;
@@ -134,13 +138,13 @@ int main() {
                 // Add songs if any currently
                 if (SongsToAddNow > 0) { // More than one
                     for (int i = 0; i < SongsToAddNow; i++) {
-                        cout << "Please input info about song " << (i + 1) << endl;
+                        cout << "Please input info about Song " << (i + 1) << ":" << endl;
                         getNewSongInfo(newPlaylist);
                     };
-
-                    // Add to main library
-                    MainStorage.addPlaylist(newPlaylist);
                 };
+
+                // Add to main library
+                MainStorage.addPlaylist(newPlaylist);
 
                 break;
 
@@ -160,7 +164,7 @@ int main() {
                     playlistChoice--;
                     MainStorage.removePlaylist(playlistChoice);
                 } else {
-                    cout << "No playlists to display!" << endl;
+                    cout << "No playlists to delete!" << endl;
                 }
 
                 break;
@@ -180,13 +184,40 @@ int main() {
                     cin >> playlistChoice;
                     playlistChoice--;
 
-                    cout << "What would you like to name the exported file?" << endl;
-                    getline(cin, fileName);
                     cin.ignore();
 
-                    MainStorage.saveToFile(playlistChoice, fileName);
+                    cout << "What would you like to name the exported file?" << endl;
+                    getline(cin, fileName);
+
+                    bool didSave = MainStorage.saveToFile(playlistChoice, fileName);
+
+                    if (didSave == true) {
+                        cout << "Successfully exported Playlist " << (playlistChoice + 1);
+                        cout << " as file " << fileName << "!" << endl << endl;
+                    } else {
+                        cout << "Something happened while trying to export Playlist " << (playlistChoice + 1);
+                        cout << " as file" << fileName << "!" << endl << endl;
+                    }
                 } else {
                     cout << "No playlists to export!" << endl;
+                }
+
+                break;
+            };
+
+            case 8: { // End Program
+                cout << "You are now attempting to exit the Spotify Server Backend" << endl;
+                cout << "Please type 'n' to confirm exit: ";
+
+                cin >> userExitChar;
+
+                if (userExitChar != exitChar) {
+                    cout << endl << "You didn't input the exit character!" << endl;
+                    cout << "Returning to menu.." << endl << endl;
+                } else {
+                    cout << endl << "Clearing local data.." << endl << endl;
+                    MainStorage.~MusicStorage();
+                    cout << "Exiting backend.. Goodbye!" << endl;
                 }
 
                 break;

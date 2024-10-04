@@ -24,6 +24,8 @@ class Playlist{
     void printSong() const;
 
     int getSongCount();
+
+    Song** GetSongs();
 };
 
 #endif

@@ -20,9 +20,7 @@ Song::Song(string t, string a, string dr, int y, double r){
 }
 
 // Song destructor
-Song::~Song() {
-    cout << "Destroyed Song: " << title << endl;
-}
+Song::~Song() {}
 
 //Accessors
 string Song::getTitle() const{

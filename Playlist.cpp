@@ -11,12 +11,10 @@ Playlist::Playlist(int size){
 
 // Playlist destructor
 Playlist::~Playlist() {
-    cout << "\nDestroying Playlist" << endl;
     for (int i = 0; i < currentSize; ++i) {
         delete songs[i];
     }
     delete[] songs;
-    cout << "Playlist destroyed" << endl;
 }
 
 
@@ -39,7 +37,6 @@ void Playlist::addSong(Song* song) {
         maxSize = updatedMax;
     }
     songs[currentSize++] = song; // Allocate new Song object
-    cout << "Added song: " << songs[currentSize - 1]->getTitle() << endl << endl;
 }
 
 void Playlist::removeSong(int index){
@@ -53,7 +50,7 @@ void Playlist::removeSong(int index){
     for (int i = index; i < currentSize - 1; ++i){
         songs[i] = songs[i + 1];
     }
-    songs[--currentSize] = nullptr;
+    songs[currentSize - 1] = nullptr;
     --currentSize;
 }
 
@@ -63,16 +60,20 @@ void Playlist::printSong() const{ // finish this
         return;
     } else {
         for (int i = 0; i < currentSize; i++) {
-            cout << setw(17) << "Song #" << (i + 1) << ":" << endl;
-            cout << setw(25) << "Title: " << songs[i]->getTitle() << endl;
-            cout << setw(25) << "Artist: " << songs[i]->getArtist() << endl;
-            cout << setw(25) << "Duration: " << songs[i]->getDuration() << endl;
-            cout << setw(25) << "Year: " << songs[i]->getYear() << endl;
-            cout << setw(25) << "Rating: " << songs[i]->getRating() << endl;
+            cout << setw(10) << "Song #" << (i + 1) << ":" << endl;
+            cout << setw(18) << "Title: " << songs[i]->getTitle() << endl;
+            cout << setw(18) << "Artist: " << songs[i]->getArtist() << endl;
+            cout << setw(18) << "Duration: " << songs[i]->getDuration() << endl;
+            cout << setw(18) << "Year: " << songs[i]->getYear() << endl;
+            cout << setw(18) << "Rating: " << songs[i]->getRating() << endl;
         }
     }
 }
 
 int Playlist::getSongCount() {
     return currentSize;
+}
+
+Song** Playlist::GetSongs() {
+    return songs;
 }

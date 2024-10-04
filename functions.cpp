@@ -10,6 +10,8 @@ void displayWelcomeMenu() {
     cout << setw(22) << "5. Create Playlist" << endl;
     cout << setw(22) << "6. Delete Playlist" << endl;
     cout << setw(22) << "7. Export Playlist" << endl;
+    cout << setw(18) << "8. End Program" << endl;
+    cout << "Selection: ";
 }
 
 void getNewSongInfo(Playlist* Playlist) {
@@ -19,20 +21,20 @@ void getNewSongInfo(Playlist* Playlist) {
 
     cin.ignore(); 
 
-    cout << "Song Title: ";
+    cout << setw(19) << "Title: ";
     getline(cin, Title);
 
-    cout << "Song Artist: ";
+    cout << setw(19) << "Artist: ";
     getline(cin, Artist);
 
-    cout << "Song Duration (x:xx): ";
+    cout << setw(19) << "Duration (x:xx): ";
     getline(cin, Duration);
 
-    cout << "Song Release Year: ";
+    cout << setw(19) << "Release Year: ";
     getline(cin, YearStr);
     Year = stoi(YearStr);
 
-    cout << "Song Rating: ";
+    cout << setw(19) << "Rating: ";
     getline(cin, RatingStr);
     Rating = stod(RatingStr);
 
@@ -40,4 +42,7 @@ void getNewSongInfo(Playlist* Playlist) {
 
     // After adding the song
     Playlist->addSong(newSong);
+
+    Title.clear(); Artist.clear(); Duration.clear(); YearStr.clear(); RatingStr.clear();
+    Year = 0; Rating = 0.0;
 }
