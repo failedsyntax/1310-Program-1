@@ -36,11 +36,9 @@ void MusicStorage::addPlaylist(Playlist *newPlaylist)
         };
 
         // Release old playlist and update
-        playlists[0]->printSong();
         delete[] playlists;
 
         playlists = updatedPlaylists;
-        playlists[0]->printSong();
     };
 
     playlists[currentPlaylists++] = newPlaylist;
@@ -71,13 +69,11 @@ void MusicStorage::removePlaylist(int index)
             updatedPlaylist[i] = playlists[i];
         };
 
-        // Release old playlist and update
-        playlists[0]->printSong();
-        updatedPlaylist[0]->printSong();
-
         delete[] playlists;
         playlists = updatedPlaylist;
     }
+
+    cout << "Successfully deleted Playlist " << (index + 1) << endl << endl;
 }
 
 Playlist *MusicStorage::getPlaylist(int index)
@@ -97,7 +93,10 @@ void MusicStorage::displayPlaylists()
 {
     for (int i = 0; i < currentPlaylists; ++i)
     {
-        cout << setw(15) << "Playlist " << (i + 1) << endl;
+        cout << setw(1) <<(i + 1) << ". ";
+        cout << setw(8) << "Playlist " << (i + 1) << endl;
+        playlists[i]->printSong();
+        cout << "----------------------------------------" << endl << endl;
     };
 }
 
@@ -105,32 +104,46 @@ void MusicStorage::printPlaylists() const
 {
     for (int i = 0; i < currentPlaylists; ++i)
     {
-        cout << "Playlist " << (i + 1) << ": " << endl;
-        playlists[i]->printSong();
+        cout << (i + 1) << ".   Playlist " << (i + 1) << endl;
     }
 }
 
 void MusicStorage::printSpecificPlaylist(int playlistNum)
 {
-    cout << playlists[playlistNum];
-    cout << "Printing playlist " << playlistNum + 1 << ":" << endl;
+    cout << endl << endl << "Printing playlist " << playlistNum + 1 << ":" << endl;
     playlists[playlistNum]->printSong();
 }
 
 bool MusicStorage::saveToFile(int index, string fileName)
 {
-    if (index <= currentPlaylists)
-    {
-        ofstream saveFile;
+    if (index < 0 || index >= currentPlaylists) {
+        cout << "Index is out of bounds!" << endl;
+        return false;
+    }
 
-        Playlist *SelectedPlaylist = playlists[index];
-        cout << "Count: " << SelectedPlaylist->getSongCount();
-        for (int i = 0; i < SelectedPlaylist->getSongCount(); i++)
-        {
-            cout << i << " | ";
-            SelectedPlaylist[i].printSong();
-        }
-    };
+    ofstream saveFile;
+    saveFile.open(fileName);
+
+    if (!saveFile.is_open()) {
+        cout << "Couldn't open file to export!" << endl;
+        return false;
+    }
+
+    Playlist *SelectedPlaylist = playlists[index];
+    Song** PlaylistSongs = SelectedPlaylist->GetSongs();
+
+    cout << "Found " << SelectedPlaylist->getSongCount();
+    cout << " songs to export!" << endl << endl;
+    for (int i = 0; i < SelectedPlaylist->getSongCount(); i++)
+    {
+        saveFile << PlaylistSongs[i]->getTitle() << "#";
+        saveFile << PlaylistSongs[i]->getArtist() << "#";
+        saveFile << PlaylistSongs[i]->getDuration() << "#";
+        saveFile << PlaylistSongs[i]->getYear() << "#";
+        saveFile << PlaylistSongs[i]->getRating() << "\n";
+    }
+
+    saveFile.close();
 
     return true;
 }
@@ -151,8 +164,6 @@ bool MusicStorage::loadFromFile(const char *filename)
         return false;
     }
 
-    cout << "File opened successfully." << endl;
-
     Playlist *newPlaylist = new Playlist(1);
 
     while (getline(file, title, '#'))
@@ -164,7 +175,13 @@ bool MusicStorage::loadFromFile(const char *filename)
         getline(file, tmp); // Rating
         rating = stod(tmp);
 
-        cout << "Title: " << title << ", Artist: " << artist << ", Duration: " << duration << ", Year: " << year << ", Rating: " << rating << endl;
+        cout << "Adding New Song:" << endl;
+        cout << setw(13) << "Title: " << title << endl;
+        cout << setw(13) << "Artist: " << artist << endl;
+        cout << setw(13) << "Duration: " << duration << endl;
+        cout << setw(13) << "Year: " << year << endl;
+        cout << setw(13) << "Rating: " << rating << endl << endl;
+
         Song *newSong = new Song(title, artist, duration, year, rating);
 
         newPlaylist->addSong(newSong);
@@ -177,9 +194,6 @@ bool MusicStorage::loadFromFile(const char *filename)
         year = 0;
         rating = 0.0;
     }
-
-    cout << "Finished reading file." << endl
-         << endl;
 
     addPlaylist(newPlaylist);
     // delete newPlaylist;
