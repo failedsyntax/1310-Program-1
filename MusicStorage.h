@@ -2,11 +2,8 @@
 #define storage_h
 
 /*
-Pointer to an array of pointers to the data.
- Data stored is the data class.
-o Examples: parking lot, toy box, galaxy (holds stars).
-o Requirements: be able to read items from a file, be able to print the contents
-to the screen
+    Title: MusicStorage.h
+    Purpose: Header for MusicStorage.cpp
 */
 
 #include <iostream>

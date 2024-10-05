@@ -1,3 +1,7 @@
+/*
+    Title: Song.h
+    Purpose: Header for song.cpp, has the variables for the songs.
+*/
 #ifndef SONG_H
 #define SONG_H
 

@@ -1,3 +1,8 @@
+/*
+    Title: Functions.cpp
+    Purpose: Show main menu and if the user wants to enter a new song
+    use getNewSongInfo
+*/
 #include "functions.h"
 
 void displayWelcomeMenu() {
