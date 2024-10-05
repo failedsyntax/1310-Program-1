@@ -1,3 +1,8 @@
+/*
+    Title: MusicStorage.cpp
+    Purpose: Playlist function allows the user to add, delete, and display the playlists.
+    Also load playlists from a file.
+*/
 #include "MusicStorage.h"
 
 MusicStorage::MusicStorage(int size)

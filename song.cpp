@@ -1,3 +1,9 @@
+/*
+    Title: Song.cpp
+    Purpose: Functions file for Song header, holds the variables for the songs (title, artist, duration, year, rating)
+    Stores the information for the songs
+*/
+
 #include "song.h"
 
 //constructor

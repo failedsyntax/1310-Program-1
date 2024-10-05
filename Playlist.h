@@ -1,3 +1,7 @@
+/*
+    Title: Playlist.h
+    Purpose: Header for Playlist.cpp
+*/
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 

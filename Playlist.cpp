@@ -1,3 +1,10 @@
+/*
+    Title: Playlist.cpp
+    Purpose: Playlist class functions file, access playlists, create songs,
+    delete songs, and print songs. It will get the number of songs, and also the size of
+    the array for songs.
+*/
+
 #include "Playlist.h"
 #include <iomanip>
 
@@ -54,7 +61,7 @@ void Playlist::removeSong(int index){
     --currentSize;
 }
 
-void Playlist::printSong() const{ // finish this
+void Playlist::printSong() const{
     if (currentSize == 0){
         cout << "There is nothing in the Playlist." << endl;
         return;

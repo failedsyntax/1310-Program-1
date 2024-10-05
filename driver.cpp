@@ -1,3 +1,9 @@
+/*
+    Title: Driver.cpp
+    Purpose: Main driver function, main menu for the program.
+    Allows the user to input choices to effect txt files.
+*/
+
 #include "Playlist.h"
 #include "song.h"
 #include "MusicStorage.h"

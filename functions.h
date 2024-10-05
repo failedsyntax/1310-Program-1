@@ -1,3 +1,7 @@
+/*
+    Title: functions.h
+    Purpose: Header for functions.cpp, holds the display welcome menu and the getNewSongInfo
+*/
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
